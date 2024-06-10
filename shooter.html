@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style type="text/css">
+    #player {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        background-color: aqua;
+    }
+</style>
+<body>
+    <canvas id="playground" height="800" width="800"></canvas>
+</body>
+<script>
+    // let player = document.getElementById('player');
+    // function runner(){
+    // player.style.left;
+    // }
+    // setInterval(runner, 1000);
+
+    let playground = document.getElementById('playground');
+    const ctx = playground.getContext('2d');
+
+    let x = 400;
+    let y = 400;
+    let width=40;
+    let height=100;
+    let x_velocity=1;
+    let y_velocity=0;
+    let goli_Yvelocity = 10;
+    let goli_Ycoord = y-10;
+    ctx.fillStyle = "black";
+    ctx.fillRect(x, y, width, height);
+    //ctx.fillRect(x-coord, y-coord, width, height);
+
+    
+    let left = function walkLeft(){
+    ctx.clearRect(x,y,width,height);
+        x -= x_velocity;
+        ctx.fillStyle = "black";
+        ctx.fillRect(x, y, width, height);    
+    }
+
+    let right = function walkRight(){
+    ctx.clearRect(x,y,width,height);
+        x += x_velocity;
+        ctx.fillStyle = "black";
+        ctx.fillRect(x, y, width, height);    
+    }
+
+    let bullet =function goli(){
+        ctx.fillStyle='yellow';
+        ctx.fillRect(goli_Ycoord,y,20,40);
+    
+
+    }
+    let shoot = function bulleFire(){
+        
+        ctx.clearRect(x,goli_Ycoord,20,40);
+        goli_Ycoord -= goli_Yvelocity;
+        
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(x,goli_Ycoord,20,40);
+    }
+
+    
+    let 
+    isKeyPressing=false;
+    document.addEventListener( 'keydown', function(event){
+        
+        if (event.key === "a" && isKeyPressing ==false) {
+            console.log('key is down')    
+           running = setInterval(left,10);
+            isKeyPressing=true;
+  }
+  if (event.key === "d" && isKeyPressing ==false) {
+            console.log('key is down')    
+           running = setInterval(right,10);
+            isKeyPressing=true;
+  }
+  if (event.key === "Enter") {
+            console.log('Enter key Pressed');
+            bullet;    
+           shooting = setInterval(shoot,10);
+            isKeyPressing=true;
+
+            if (goli_Ycoord<=0) {
+            console.log('bullet went off screen');
+            clearInterval(shooting);
+            goli_Ycoord= y-10;
+
+            
+  }
+  }
+  
+    });
+
+    document.addEventListener('keyup', function(event){
+        if(isKeyPressing==true){
+        isKeyPressing=false;
+        console.log('key is up')
+        clearInterval(running);
+        }
+    });
+
+    // document.addEventListener('click', function(event){
+    //     console.log('dabaya');
+    //     setInterval(shoot, 10)
+    // })
+    
+
+</script>
+</html>
